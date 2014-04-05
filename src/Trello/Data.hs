@@ -75,3 +75,16 @@ data Attachment = Attachment {
   ,attachmentUrl  :: String
   ,attachmentTime :: UTCTime
 } deriving (Show, Eq, Ord)
+
+instance FromJSON Card where
+  parseJSON (Object o) =
+    Card <$> o .: "id"
+         <*> o .: "idBoard"
+         <*> o .: "idList"
+         <*> o .: "name"
+         <*> o .: "desc"
+         <*> o .; "idMembers"
+         <*> o ?.: "due"
+         <*> o .: ""
+  parseJSON _          = fail "Can't decode"
+
