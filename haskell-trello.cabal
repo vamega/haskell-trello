@@ -25,6 +25,7 @@ library
                        ,aeson
                        ,http-types
                        ,time
+                       ,old-locale
 
   -- hs-source-dirs:      
   default-language:    Haskell2010
@@ -33,3 +34,4 @@ library
                    ,Trello.Data.Card
                    ,Trello.Data.List
                    ,Trello.Data.Member
+                   ,Trello.Api
