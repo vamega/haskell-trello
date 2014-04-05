@@ -7,7 +7,6 @@ import Data.Time
 import Data.Aeson.Types
 import Control.Applicative
 import Control.Monad
-import Trello.Api
 
 newtype BoardRef      = BoardRef String deriving (Show, Eq, Ord)
 newtype ListRef       = ListRef String deriving (Show, Eq, Ord)
@@ -111,8 +110,8 @@ instance FromJSON Card where
          <*> o .: "name"
          <*> o .: "desc"
          <*> o .: "idMembers"
-         <*> liftM (>>= parseTimestamp) (o .:? "due")
-         <*> (liftM parseTimestamp) (o .: "dateLastActivity")
+         <*> o .:? "due"
+         <*> o .: "dateLastActivity"
          <*> o .: "closed" -- Confirm this mapping later.
   parseJSON _          = fail "Can't decode"
 
