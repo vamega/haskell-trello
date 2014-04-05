@@ -2,6 +2,7 @@
 module Trello.Data where
 
 import Data.Data
+import Data.Text
 import Data.Time
 import Data.Aeson.Types
 import Control.Applicative
@@ -82,25 +83,25 @@ data Attachment = Attachment {
 } deriving (Show, Eq, Ord)
 
 instance FromJSON MemberRef where
-  parseJSON (String s) = return $ MemberRef s
+  parseJSON (String s) = return $ MemberRef $ unpack s
 
 instance FromJSON BoardRef where
-  parseJSON (String s) = return $ BoardRef s
+  parseJSON (String s) = return $ BoardRef $ unpack s
 
 instance FromJSON ListRef where
-  parseJSON (String s) = return $ ListRef s
+  parseJSON (String s) = return $ ListRef $ unpack s
 
 instance FromJSON CardRef where
-  parseJSON (String s) = return $ CardRef s
+  parseJSON (String s) = return $ CardRef $ unpack s
 
 instance FromJSON CommentRef where
-  parseJSON (String s) = return $ CommentRef s
+  parseJSON (String s) = return $ CommentRef $ unpack s
 
 instance FromJSON ChecklistRef where
-  parseJSON (String s) = return $ ChecklistRef s
+  parseJSON (String s) = return $ ChecklistRef $ unpack s
 
 instance FromJSON AttachmentRef where
-  parseJSON (String s) = return $ AttachmentRef s
+  parseJSON (String s) = return $ AttachmentRef $ unpack s
 
 instance FromJSON Card where
   parseJSON (Object o) =
@@ -110,8 +111,8 @@ instance FromJSON Card where
          <*> o .: "name"
          <*> o .: "desc"
          <*> o .: "idMembers"
-         <*> liftM parseTimestamp (o .:? "due")
-         <*> liftM parseTimestamp (o .: "dateLastActivity")
+         <*> liftM (>>= parseTimestamp) (o .:? "due")
+         <*> (liftM parseTimestamp) (o .: "dateLastActivity")
          <*> o .: "closed" -- Confirm this mapping later.
   parseJSON _          = fail "Can't decode"
 
