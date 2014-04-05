@@ -4,4 +4,4 @@ import System.Locale
 import Trello.ApiData
 
 parseTimestamp :: String -> Maybe UTCTime
-parseTimestamp time = parseTime defaultTimeLocale "%y-%m-%d %H:%M" time
+parseTimestamp time = parseTime defaultTimeLocale "%FT%T%Q%Z" time
