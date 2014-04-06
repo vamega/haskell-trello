@@ -19,10 +19,10 @@ data Board = Board {
 } deriving (Show, Eq, Ord)
 
 data List = List {
-   listRef   :: ListRef
-  ,listBoard :: BoardRef
-  ,listName  :: String
-  ,listCards :: [CardRef]
+   listRef    :: ListRef
+  ,listBoard  :: BoardRef
+  ,listName   :: String
+  ,listClosed :: Bool
 } deriving (Show, Eq, Ord)
 
 data Card = Card {
@@ -34,14 +34,18 @@ data Card = Card {
   ,cardMembers     :: [MemberRef]
   ,cardDueDate     :: Maybe UTCTime
   ,cardUpdatedAt   :: UTCTime
-  ,cardArchived    :: Bool
+  ,cardClosed      :: Bool
 } deriving (Show, Eq, Ord)
 
 data Member = Member {
-   memberRef    :: MemberRef
-  ,memberName   :: String
-  ,memberBoards :: [BoardRef]
-  ,memberCards  :: [CardRef]
+   memberRef           :: MemberRef
+  ,memberBoards        :: [BoardRef]
+  ,memberBoardsInvited :: [BoardRef]
+  ,memberBoardsPinned  :: [BoardRef]
+  ,memberFullName      :: String
+  ,memberUsername      :: String
+  ,memberEmail         :: String
+  ,memberUrl           :: String
 } deriving (Show, Eq, Ord)
 
 data Comment = Comment {

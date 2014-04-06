@@ -34,5 +34,5 @@ instance FromJSON Card where
          <*> liftM (map MemberRef) (o .: "idMembers")
          <*> o .:? "due"
          <*> o .: "dateLastActivity"
-         <*> o .: "closed" -- Confirm this mapping later.
+         <*> o .: "closed"
   parseJSON _          = fail "Can't decode"
