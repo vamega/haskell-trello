@@ -50,7 +50,7 @@ api :: MonadIO m => OAuth -> [String] -> m ByteString
 api oauth path = api' oauth path default_params
 
 api' :: MonadIO m => OAuth -> [String] -> [(String, String)] -> m ByteString
-api' oauth path params = lift $ simpleHttp requestURL
+api' oauth path params = simpleHttp requestURL
   where requestURL = base_url ++ (intercalate "/" path) ++ "?" ++ (urlEncodeVars params) ++ (urlEncodeVars $ oauthList oauth)
 
 oauthList :: OAuth -> [(String, String)]
