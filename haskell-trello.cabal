@@ -26,8 +26,6 @@ library
                        ,HTTP
                        ,aeson
                        ,http-types
-                       ,old-locale
-                       ,bytestring
                        ,transformers
                        ,time
                        ,text

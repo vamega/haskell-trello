@@ -9,18 +9,13 @@ import Data.ByteString.Lazy (ByteString)
 
 import Trello.Data
 import Trello.ApiData
-
-getList :: ListRef -> Either Error List
-getList listRef = apiGetListById listRef >>= parseList
+import Trello.Request
 
 parseList :: ByteString -> Either Error List
 parseList json = validateJson $ (decode json :: Maybe List)
 
 parseLists :: ByteString -> Either Error [List]
 parseLists json = validateJson $ (decode json :: Maybe [List])
-
-apiGetListById :: ListRef -> Either Error ByteString
-apiGetListById (ListRef listId) = Left $ Error "Stub"
 
 instance FromJSON List where
   parseJSON (Object o) =

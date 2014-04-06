@@ -11,17 +11,11 @@ import Data.Maybe
 import Trello.Data
 import Trello.ApiData
 
-getMember :: MemberRef -> Either Error Member
-getMember memberRef = apiGetMemberById memberRef >>= parseMember
-
 parseMember :: ByteString -> Either Error Member
 parseMember json = validateJson $ (decode json :: Maybe Member)
 
 parseMembers :: ByteString -> Either Error [Member]
 parseMembers json = validateJson $ (decode json :: Maybe [Member])
-
-apiGetMemberById :: MemberRef -> Either Error ByteString
-apiGetMemberById (MemberRef memberId) = Left $ Error "Stub"
 
 instance FromJSON Member where
   parseJSON (Object o) =

@@ -11,6 +11,11 @@ newtype CommentRef    = CommentRef String deriving (Show, Eq, Ord)
 newtype ChecklistRef  = ChecklistRef String deriving (Show, Eq, Ord)
 newtype AttachmentRef = AttachmentRef String deriving (Show, Eq, Ord)
 
+data OAuth = OAuth {
+  oauthKey    :: String
+  ,oauthToken :: String
+} deriving (Show, Eq, Ord)
+
 data Board = Board {
    boardRef     :: BoardRef
   ,boardName    :: String
@@ -69,7 +74,7 @@ data ChecklistItem = ChecklistItem {
 } deriving (Show, Eq, Ord)
 
 data Label = Label {
-  labelName         :: String
+   labelName         :: String
   ,labelDescription :: Maybe String
 } deriving (Show, Eq, Ord)
 

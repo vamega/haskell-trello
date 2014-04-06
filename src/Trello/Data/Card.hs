@@ -12,17 +12,11 @@ import Trello.ApiData
 
 newtype CardList = CardList [Card]
 
-getCard :: CardRef -> Either Error Card
-getCard cardRef = apiGetCardById cardRef >>= parseCard
-
 parseCard :: ByteString -> Either Error Card
 parseCard json = validateJson $ (decode json :: Maybe Card)
 
 parseCards :: ByteString -> Either Error [Card]
 parseCards json = validateJson $ (decode json :: Maybe [Card])
-
-apiGetCardById :: CardRef -> Either Error ByteString
-apiGetCardById (CardRef cardId) = Left $ Error "Stub"
 
 instance FromJSON Card where
   parseJSON (Object o) =
