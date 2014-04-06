@@ -39,13 +39,13 @@ data Card = Card {
 
 data Member = Member {
    memberRef           :: MemberRef
-  ,memberBoards        :: [BoardRef]
-  ,memberBoardsInvited :: [BoardRef]
-  ,memberBoardsPinned  :: [BoardRef]
   ,memberFullName      :: String
   ,memberUsername      :: String
-  ,memberEmail         :: String
-  ,memberUrl           :: String
+  ,memberBoards        :: Maybe [BoardRef]
+  ,memberBoardsInvited :: Maybe [BoardRef]
+  ,memberBoardsPinned  :: Maybe [BoardRef]
+  ,memberEmail         :: Maybe String
+  ,memberUrl           :: Maybe String
 } deriving (Show, Eq, Ord)
 
 data Comment = Comment {

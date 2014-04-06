@@ -6,6 +6,7 @@ import Data.Aeson (decode)
 import Data.Aeson.Parser
 import Data.Aeson.Types hiding (Error)
 import Data.ByteString.Lazy (ByteString)
+import Data.Maybe
 
 import Trello.Data
 import Trello.ApiData
@@ -24,12 +25,13 @@ apiGetMemberById (MemberRef memberId) = Left $ Error "Stub"
 
 instance FromJSON Member where
   parseJSON (Object o) =
-    Member <$> liftM MemberRef  (o .: "id")
-           <*> liftM (map BoardRef) (o .: "idBoards")
-           <*> liftM (map BoardRef) (o .: "idBoardsInvited")
-           <*> liftM (map BoardRef) (o .: "idBoardsPinned")
+    Member <$> liftM MemberRef (o .: "id")
            <*> o .: "fullName"
            <*> o .: "username"
-           <*> o .: "email"
-           <*> o .: "url"
+           <*> liftM (liftMap BoardRef) (o .:? "idBoards")
+           <*> liftM (liftMap BoardRef) (o .:? "idBoardsInvited")
+           <*> liftM (liftMap BoardRef) (o .:? "idBoardsPinned")
+           <*> o .:? "email"
+           <*> o .:? "url"
+    where liftMap f = liftM (map f)
   parseJSON _          = fail "Can't decode"
