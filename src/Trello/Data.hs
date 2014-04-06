@@ -14,8 +14,8 @@ newtype AttachmentRef = AttachmentRef String deriving (Show, Eq, Ord)
 data Board = Board {
    boardRef     :: BoardRef
   ,boardName    :: String
-  ,boardLists   :: [ListRef]
-  ,boardMembers :: [MemberRef]
+  ,boardLists   :: Maybe [List]
+  ,boardMembers :: Maybe [Member]
 } deriving (Show, Eq, Ord)
 
 data List = List {

@@ -39,5 +39,4 @@ library
                    ,Trello.Data.Card
                    ,Trello.Data.List
                    ,Trello.Data.Member
-                   ,Trello.Api
                    ,Request

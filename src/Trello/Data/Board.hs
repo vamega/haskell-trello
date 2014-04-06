@@ -1,11 +1,18 @@
+{-# LANGUAGE OverloadedStrings #-}
 module Trello.Data.Board where
 import Data.ByteString.Lazy (ByteString)
+import Control.Applicative ((<$>), (<*>))
+import Control.Monad
 
 import Trello.Data
 import Trello.ApiData
 import Trello.Data.List
 import Trello.Data.Card
 import Trello.Data.Member
+
+import Data.Aeson (decode)
+import Data.Aeson.Parser
+import Data.Aeson.Types hiding (Error)
 
 getBoard :: BoardRef -> Either Error Board
 getBoard ref = getBoardById ref >>= parseBoard
@@ -33,3 +40,13 @@ getCardsByBoardId (BoardRef id) filter = Left $ Error "Stub"
 
 getMembersByBoardId :: BoardRef -> MemberFilter -> Either Error ByteString
 getMembersByBoardId (BoardRef id) filter = Left $ Error "Stub"
+
+instance FromJSON Board where
+  parseJSON (Object v) =
+    Board <$> liftM BoardRef (v .: "id")
+          <*> v .: "name"
+          <*> v .:? "lists"
+          <*> v .:? "members"
+  parseJSON _          = mzero
+
+
