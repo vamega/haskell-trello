@@ -1,4 +1,6 @@
 module Trello.Data.Board where
+import Data.ByteString.Lazy (ByteString)
+
 import Trello.Data
 import Trello.ApiData
 import Trello.Data.List
@@ -17,17 +19,17 @@ getCardsForBoard (Board ref _ _ _) filter = getCardsByBoardId ref filter >>= par
 getMembersForBoard :: Board -> MemberFilter -> Either Error [Member]
 getMembersForBoard (Board ref _ _ _) filter = getMembersByBoardId ref filter >>= parseMembers
 
-parseBoard :: String -> Either Error Board
+parseBoard :: ByteString -> Either Error Board
 parseBoard json = Left $ Error "Stub"
 
-getBoardById :: BoardRef -> Either Error String
+getBoardById :: BoardRef -> Either Error ByteString
 getBoardById (BoardRef id) = Left $ Error "Stub"
 
-getListsByBoardId :: BoardRef -> ListFilter -> Either Error String
+getListsByBoardId :: BoardRef -> ListFilter -> Either Error ByteString
 getListsByBoardId (BoardRef id) filter = Left $ Error "Stub"
 
-getCardsByBoardId :: BoardRef -> CardFilter -> Either Error String
+getCardsByBoardId :: BoardRef -> CardFilter -> Either Error ByteString
 getCardsByBoardId (BoardRef id) filter = Left $ Error "Stub"
 
-getMembersByBoardId :: BoardRef -> MemberFilter -> Either Error String
+getMembersByBoardId :: BoardRef -> MemberFilter -> Either Error ByteString
 getMembersByBoardId (BoardRef id) filter = Left $ Error "Stub"
