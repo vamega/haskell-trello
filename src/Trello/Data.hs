@@ -1,15 +1,19 @@
+{-# LANGUAGE OverloadedStrings #-}
 module Trello.Data where
 
 import Data.Data
 import Data.Time
+import Data.Aeson.Types
+import Control.Applicative
+import Control.Monad
 
-newtype BoardRef      = BoardRef Int deriving (Show, Eq, Ord)
-newtype ListRef       = ListRef Int deriving (Show, Eq, Ord)
-newtype CardRef       = CardRef Int deriving (Show, Eq, Ord)
-newtype MemberRef     = MemberRef Int deriving (Show, Eq, Ord)
-newtype CommentRef    = CommentRef Int deriving (Show, Eq, Ord)
-newtype ChecklistRef  = ChecklistRef Int deriving (Show, Eq, Ord)
-newtype AttachmentRef = AttachmentRef Int deriving (Show, Eq, Ord)
+newtype BoardRef      = BoardRef String deriving (Show, Eq, Ord)
+newtype ListRef       = ListRef String deriving (Show, Eq, Ord)
+newtype CardRef       = CardRef String deriving (Show, Eq, Ord)
+newtype MemberRef     = MemberRef String deriving (Show, Eq, Ord)
+newtype CommentRef    = CommentRef String deriving (Show, Eq, Ord)
+newtype ChecklistRef  = ChecklistRef String deriving (Show, Eq, Ord)
+newtype AttachmentRef = AttachmentRef String deriving (Show, Eq, Ord)
 
 data Board = Board {
    boardRef     :: BoardRef
@@ -75,3 +79,17 @@ data Attachment = Attachment {
   ,attachmentUrl  :: String
   ,attachmentTime :: UTCTime
 } deriving (Show, Eq, Ord)
+
+instance FromJSON Card where
+  parseJSON (Object o) =
+    Card <$> liftM CardRef  (o .: "id")
+         <*> liftM BoardRef (o .: "idBoard")
+         <*> liftM ListRef  (o .: "idList")
+         <*> o .: "name"
+         <*> o .: "desc"
+         <*> liftM (map MemberRef) (o .: "idMembers")
+         <*> o .:? "due"
+         <*> o .: "dateLastActivity"
+         <*> o .: "closed" -- Confirm this mapping later.
+  parseJSON _          = fail "Can't decode"
+
