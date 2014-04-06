@@ -21,10 +21,10 @@ library
   -- other-modules:       
   -- other-extensions:    
   build-depends:        base >=4.6 && <4.7
+                       ,bytestring
                        ,http-conduit
                        ,aeson
                        ,http-types
-                       ,old-locale
                        ,time
                        ,text
 

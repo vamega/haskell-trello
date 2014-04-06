@@ -1,11 +1,7 @@
-{-# LANGUAGE OverloadedStrings #-}
 module Trello.Data where
 
 import Data.Data
 import Data.Time
-import Data.Aeson.Types
-import Control.Applicative
-import Control.Monad
 
 newtype BoardRef      = BoardRef String deriving (Show, Eq, Ord)
 newtype ListRef       = ListRef String deriving (Show, Eq, Ord)
@@ -79,17 +75,3 @@ data Attachment = Attachment {
   ,attachmentUrl  :: String
   ,attachmentTime :: UTCTime
 } deriving (Show, Eq, Ord)
-
-instance FromJSON Card where
-  parseJSON (Object o) =
-    Card <$> liftM CardRef  (o .: "id")
-         <*> liftM BoardRef (o .: "idBoard")
-         <*> liftM ListRef  (o .: "idList")
-         <*> o .: "name"
-         <*> o .: "desc"
-         <*> liftM (map MemberRef) (o .: "idMembers")
-         <*> o .:? "due"
-         <*> o .: "dateLastActivity"
-         <*> o .: "closed" -- Confirm this mapping later.
-  parseJSON _          = fail "Can't decode"
-

@@ -25,3 +25,6 @@ instance Show MemberFilter where
   show (MemberOwners) = "owners"
   show (MemberAll)    = "all"
 
+validateJson :: Maybe a -> Either Error a
+validateJson Nothing = Left $ Error "Error parsing JSON response"
+validateJson (Just x) = Right x
