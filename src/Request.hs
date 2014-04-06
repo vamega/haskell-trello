@@ -2,10 +2,11 @@
 
 module Request where
 import Network.HTTP.Conduit
+import Data.Conduit 
 import Trello.Data
 import Trello.Data.Board
 import Network.HTTP.Base
-import Control.Monad.IO.Class (MonadIO)
+import Control.Monad.IO.Class (MonadIO, liftIO)
 import Control.Monad
 import Data.Aeson ((.:), (.:?), decode, FromJSON(..), Value(..))
 import Control.Applicative ((<$>), (<*>))
@@ -25,13 +26,17 @@ getBoard' :: MonadIO m => String -> HttpParams -> m BS.ByteString
 getBoard' boardId params = simpleHttp requestURL
   where requestURL = board_url ++ boardId ++ "?" ++ (urlEncodeVars params)
 
---decode' :: MonadIO m => m BS.ByteString -> m (Maybe Board)
---decode' = liftM decode 
+getBoard'' boardId params =
+  do
+    request <- parseUrl requestURL
+    withManager $ \manager ->
+      do
+        Response _ _ bsrc <- http request manager
+        return bsrc
+  where requestURL = board_url ++ boardId ++ "?" ++ (urlEncodeVars params)
 
 main :: IO ()
 main = do
-  board <- getBoard' test_id test_params
+  board <- getBoard'' test_id test_params
   print (decode $ board :: Maybe Board)
-  --case board of Nothing -> return Nothing
-  --              Just b  -> return . Just $ putStrLn (show b)
 
