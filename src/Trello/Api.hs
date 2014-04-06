@@ -25,14 +25,14 @@ list oauth ref = liftM parseList $ getListById oauth ref
 member :: MonadIO m => OAuth -> MemberRef -> m (Either Error Member)
 member oauth ref = liftM parseMember $ getMemberById oauth ref
 
-listsForBoard :: MonadIO m => OAuth -> Board -> Maybe ListFilter -> m (Either Error [List])
-listsForBoard oauth (Board ref _ _ _) filter = liftM parseLists $ getListsByBoardId oauth ref filter
+listsForBoard :: MonadIO m => OAuth -> Maybe ListFilter -> Board -> m (Either Error [List])
+listsForBoard oauth filter (Board ref _ _ _) = liftM parseLists $ getListsByBoardId oauth ref filter
 
-cardsForBoard :: MonadIO m => OAuth -> Board -> Maybe CardFilter -> m (Either Error [Card])
-cardsForBoard oauth (Board ref _ _ _) filter = liftM parseCards $ getCardsByBoardId oauth ref filter
+cardsForBoard :: MonadIO m => OAuth -> Maybe CardFilter -> Board -> m (Either Error [Card])
+cardsForBoard oauth filter (Board ref _ _ _) = liftM parseCards $ getCardsByBoardId oauth ref filter
 
-membersForBoard :: MonadIO m => OAuth -> Board -> Maybe MemberFilter -> m (Either Error [Member])
-membersForBoard oauth (Board ref _ _ _) filter = liftM parseMembers $ getMembersByBoardId oauth ref filter
+membersForBoard :: MonadIO m => OAuth -> Maybe MemberFilter -> Board -> m (Either Error [Member])
+membersForBoard oauth filter (Board ref _ _ _) = liftM parseMembers $ getMembersByBoardId oauth ref filter
 
 listFromCard :: MonadIO m => OAuth -> Card -> m (Either Error List)
 listFromCard oauth (Card _ _ ref _ _ _ _ _ _) = liftM parseList $ getListById oauth ref
