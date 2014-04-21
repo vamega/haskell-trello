@@ -29,6 +29,7 @@ library
                        ,transformers
                        ,time
                        ,text
+                       ,authenticate-oauth
 
   -- hs-source-dirs:      
   default-language:    Haskell2010
