@@ -1,5 +1,4 @@
-module Trello.Api (
-) where
+module Trello.Api where
 
 import Control.Monad.IO.Class (MonadIO)
 import Control.Monad
