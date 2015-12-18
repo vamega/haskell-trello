@@ -27,7 +27,6 @@ board_path  = "boards"
 list_path   = "lists"
 card_path   = "cards"
 member_path = "members"
-filter_path = "filter"
 
 requestURL = "https://trello.com/1/OAuthGetRequestToken"
 accessURL = "https://trello.com/1/OAuthGetAccessToken"
@@ -55,15 +54,15 @@ getMemberById oauth (MemberRef id) = member' oauth [member_path, id]
 
 getCardsByBoardId :: MonadIO m => OAuth -> BoardRef -> Maybe CardFilter -> m ByteString
 getCardsByBoardId   oauth (BoardRef id) Nothing = card' oauth [board_path, id, card_path]
-getCardsByBoardId   oauth (BoardRef id) (Just filter) = card' oauth [board_path, id, card_path, filter_path, show(filter)]
+getCardsByBoardId   oauth (BoardRef id) (Just filter) = card' oauth [board_path, id, card_path, show filter]
 
 getListsByBoardId :: MonadIO m => OAuth -> BoardRef -> Maybe ListFilter -> m ByteString
 getListsByBoardId   oauth (BoardRef id) Nothing = list' oauth [board_path, id, list_path]
-getListsByBoardId   oauth (BoardRef id) (Just filter) = list' oauth [board_path, id, list_path, filter_path, show(filter)]
+getListsByBoardId   oauth (BoardRef id) (Just filter) = list' oauth [board_path, id, list_path, show filter]
 
 getMembersByBoardId :: MonadIO m => OAuth -> BoardRef -> Maybe MemberFilter -> m ByteString
 getMembersByBoardId oauth (BoardRef id) Nothing = member' oauth [board_path, id, member_path]
-getMembersByBoardId oauth (BoardRef id) (Just filter) = member' oauth [board_path, id, member_path, filter_path, show(filter)]
+getMembersByBoardId oauth (BoardRef id) (Just filter) = member' oauth [board_path, id, member_path, show filter]
 
 board', card', list', member' :: MonadIO m => OAuth -> [String] -> m ByteString
 board' oauth path = api' oauth path board_params
