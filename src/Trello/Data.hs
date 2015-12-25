@@ -40,6 +40,8 @@ data Card = Card {
   ,cardDueDate     :: Maybe UTCTime
   ,cardUpdatedAt   :: UTCTime
   ,cardClosed      :: Bool
+  ,cardShortUrl    :: String
+  ,cardUrl         :: String
 } deriving (Show, Eq, Ord)
 
 data Member = Member {

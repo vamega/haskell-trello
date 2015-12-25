@@ -34,7 +34,7 @@ membersForBoard :: MonadIO m => OAuth -> Maybe MemberFilter -> Board -> m (Eithe
 membersForBoard oauth filter (Board ref _ _ _) = liftM parseMembers $ getMembersByBoardId oauth ref filter
 
 listFromCard :: MonadIO m => OAuth -> Card -> m (Either Error List)
-listFromCard oauth (Card _ _ ref _ _ _ _ _ _) = liftM parseList $ getListById oauth ref
+listFromCard oauth (Card _ _ ref _ _ _ _ _ _ _ _) = liftM parseList $ getListById oauth ref
 
 boardFromList :: MonadIO m => OAuth -> List -> m (Either Error List)
 boardFromList oauth (List _ ref _ _) = liftM parseList $ getBoardById oauth ref

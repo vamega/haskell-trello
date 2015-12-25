@@ -29,4 +29,6 @@ instance FromJSON Card where
          <*> o .:? "due"
          <*> o .: "dateLastActivity"
          <*> o .: "closed"
+         <*> o .: "shortUrl"
+         <*> o .: "url"
   parseJSON _          = fail "Can't decode"
