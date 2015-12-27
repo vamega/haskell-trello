@@ -1,7 +1,7 @@
 module Trello.Api where
 
-import Control.Monad.IO.Class (MonadIO)
 import Control.Monad
+import Control.Monad.IO.Class (MonadIO)
 
 import Trello.ApiData
 import Trello.Data

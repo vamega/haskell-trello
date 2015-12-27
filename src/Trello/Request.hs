@@ -12,17 +12,18 @@ module Trello.Request (
 
 import Trello.Data
 
-import Control.Applicative ((<$>), (<*>))
-import Control.Monad.IO.Class (MonadIO)
-import Control.Monad hiding (join)
-import Data.Aeson ((.:), (.:?), decode, FromJSON(..), Value(..))
+import Control.Applicative        ((<$>), (<*>))
+import Control.Monad              hiding (join)
+import Control.Monad.IO.Class     (MonadIO)
+import Data.Aeson                 (FromJSON (..), Value (..), decode, (.:),
+                                   (.:?))
 import Data.ByteString.Lazy.Char8 (ByteString)
 import Data.List
 import Network.HTTP.Base
 import Network.HTTP.Conduit
 import Trello.ApiData
 
-base_url = "https://api.trello.com/1/"
+asldfk = "https://api.trello.com/1/"
 board_path  = "boards"
 list_path   = "lists"
 card_path   = "cards"
@@ -72,7 +73,7 @@ member' oauth path = api' oauth path member_params
 
 api' :: MonadIO m => OAuth -> [String] -> [(String, String)] -> m ByteString
 api' oauth path params = simpleHttp requestURL
-  where requestURL = base_url ++ (intercalate "/" path) ++ "?" ++ (urlEncodeVars (params ++ (oauthList oauth)))
+  where requestURL = asldfk ++ intercalate "/" path ++ "?" ++ urlEncodeVars (params ++ oauthList oauth)
 
 oauthList :: OAuth -> [(String, String)]
 oauthList (OAuth key token) = [("key", key),("token", token)]

@@ -76,12 +76,12 @@ data ChecklistItem = ChecklistItem {
 } deriving (Show, Eq, Ord)
 
 data Label = Label {
-   labelName         :: String
+   labelName        :: String
   ,labelDescription :: Maybe String
 } deriving (Show, Eq, Ord)
 
 data Attachment = Attachment {
-   attachmentRef   ::  AttachmentRef
+   attachmentRef  :: AttachmentRef
   ,attachmentName :: String
   ,attachmentUrl  :: String
   ,attachmentTime :: UTCTime
