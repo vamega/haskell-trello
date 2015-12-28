@@ -2,20 +2,20 @@
 module Trello.Data.List where
 import Control.Applicative
 import Control.Monad
-import Data.Aeson (decode)
+import Data.Aeson           (decode)
 import Data.Aeson.Parser
-import Data.Aeson.Types hiding (Error)
+import Data.Aeson.Types     hiding (Error)
 import Data.ByteString.Lazy (ByteString)
 
-import Trello.Data
 import Trello.ApiData
+import Trello.Data
 import Trello.Request
 
 parseList :: ByteString -> Either Error List
-parseList json = validateJson $ (decode json :: Maybe List)
+parseList json = validateJson $ decode json
 
 parseLists :: ByteString -> Either Error [List]
-parseLists json = validateJson $ (decode json :: Maybe [List])
+parseLists json = validateJson $ decode json
 
 instance FromJSON List where
   parseJSON (Object o) =

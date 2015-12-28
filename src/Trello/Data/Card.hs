@@ -2,21 +2,21 @@
 module Trello.Data.Card where
 import Control.Applicative
 import Control.Monad
-import Data.Aeson (decode)
+import Data.Aeson           (decode)
 import Data.Aeson.Parser
-import Data.Aeson.Types hiding (Error)
+import Data.Aeson.Types     hiding (Error)
 import Data.ByteString.Lazy (ByteString)
 
-import Trello.Data
 import Trello.ApiData
+import Trello.Data
 
 newtype CardList = CardList [Card]
 
 parseCard :: ByteString -> Either Error Card
-parseCard json = validateJson $ (decode json :: Maybe Card)
+parseCard json = validateJson $ decode json
 
 parseCards :: ByteString -> Either Error [Card]
-parseCards json = validateJson $ (decode json :: Maybe [Card])
+parseCards json = validateJson $ decode json
 
 instance FromJSON Card where
   parseJSON (Object o) =
@@ -29,4 +29,6 @@ instance FromJSON Card where
          <*> o .:? "due"
          <*> o .: "dateLastActivity"
          <*> o .: "closed"
+         <*> o .: "shortUrl"
+         <*> o .: "url"
   parseJSON _          = fail "Can't decode"
